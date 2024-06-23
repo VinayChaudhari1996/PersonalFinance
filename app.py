@@ -101,5 +101,3 @@ st.write("""
     - Regularly review and rebalance your investments.
     - Consider seeking professional financial advice for personalized strategies.
 """)
-
-st.footer("© 2024 Investment Goal Calculator. All rights reserved.")

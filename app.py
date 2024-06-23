@@ -42,10 +42,20 @@ if st.button("Calculate"):
         \text{Future Value:} \quad A = P \left(1 + \frac{r}{100}\right)^t + PMT \left[\frac{\left(1 + \frac{r}{100}\right)^t - 1}{\frac{r}{100}}\right]
     ''')
     st.latex(f'''
-        A = {current_value} \left(1 + \frac{{{annual_rate}}}{{100}}\right)^t + {annual_contribution} \left[\frac{{\left(1 + \frac{{{annual_rate}}}{{100}}\right)^t - 1}}{{\frac{{{annual_rate}}}{{100}}}}\right]
+        A = {current_value} \left(1 + \frac{{{annual_rate}}}{{100}}\right)^t + {annual_contribution} \left[\frac{{\left(1 + \frac{{annual_rate}}}{{100}}\right)^t - 1}}{{\frac{{{annual_rate}}}{{100}}}}\right]
     ''')
     st.latex(r'''
         \text{Time to reach target:} \quad t = \text{solved using binary search}
+    ''')
+
+    # LaTeX explanation of parameters
+    st.markdown(r'''
+        **Parameters:**
+        - \( A \) : Target amount to be reached
+        - \( P \) : Current investment value
+        - \( r \) : Annual compounding rate
+        - \( PMT \) : Annual contribution
+        - \( t \) : Time in years required to reach the target amount
     ''')
 
     # Generate chart data
@@ -91,3 +101,5 @@ st.write("""
     - Regularly review and rebalance your investments.
     - Consider seeking professional financial advice for personalized strategies.
 """)
+
+st.footer("© 2024 Investment Goal Calculator. All rights reserved.")

@@ -38,15 +38,15 @@ if st.button("Calculate"):
     st.success(f"Time required to reach ₹{target_amount:,.2f}: {result:.2f} years")
 
     # LaTeX formula and actual values
-    st.latex(r'''
+    st.latex(r"""
         \text{Future Value:} \quad A = P \left(1 + \frac{r}{100}\right)^t + PMT \left[\frac{\left(1 + \frac{r}{100}\right)^t - 1}{\frac{r}{100}}\right]
-    ''')
-    st.latex(f'''
+    """)
+    st.latex(f"""
         A = {current_value} \left(1 + \frac{{{annual_rate}}}{{100}}\right)^t + {annual_contribution} \left[\frac{{\left(1 + \frac{{annual_rate}}}{{100}}\right)^t - 1}}{{\frac{{{annual_rate}}}{{100}}}}\right]
-    ''')
-    st.latex(r'''
+    """)
+    st.latex(r"""
         \text{Time to reach target:} \quad t = \text{solved using binary search}
-    ''')
+    """)
 
     # LaTeX explanation of parameters
     st.markdown(r'''

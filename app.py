@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import altair as alt
 
 # Function to calculate the time required to reach the target
 def calculate_time_to_goal(current_value, annual_rate, annual_contribution, target_amount):
@@ -36,6 +37,17 @@ if st.button("Calculate"):
     result = calculate_time_to_goal(current_value, annual_rate, annual_contribution, target_amount)
     st.success(f"Time required to reach ₹{target_amount:,.2f}: {result:.2f} years")
 
+    # LaTeX formula and actual values
+    st.latex(r'''
+        \text{Future Value:} \quad A = P \left(1 + \frac{r}{100}\right)^t + PMT \left[\frac{\left(1 + \frac{r}{100}\right)^t - 1}{\frac{r}{100}}\right]
+    ''')
+    st.latex(f'''
+        A = {current_value} \left(1 + \frac{{{annual_rate}}}{{100}}\right)^t + {annual_contribution} \left[\frac{{\left(1 + \frac{{{annual_rate}}}{{100}}\right)^t - 1}}{{\frac{{{annual_rate}}}{{100}}}}\right]
+    ''')
+    st.latex(r'''
+        \text{Time to reach target:} \quad t = \text{solved using binary search}
+    ''')
+
     # Generate chart data
     years = np.arange(0, np.ceil(result) + 1)
     values = [current_value * (1 + annual_rate / 100) ** year + annual_contribution * ((1 + annual_rate / 100) ** year - 1) / (annual_rate / 100) for year in years]
@@ -45,7 +57,24 @@ if st.button("Calculate"):
         "Investment Value (₹)": values
     })
 
-    st.line_chart(chart_data.set_index("Year"))
+    # Plot area chart using Altair
+    chart = alt.Chart(chart_data).mark_area(
+        line={'color':'#8884d8'},
+        color=alt.Gradient(
+            gradient='linear',
+            stops=[alt.GradientStop(color='#8884d8', offset=0), alt.GradientStop(color='#ffffff', offset=1)],
+            x1=1,
+            x2=1,
+            y1=1,
+            y2=0
+        )
+    ).encode(
+        x=alt.X('Year:Q', title='Year'),
+        y=alt.Y('Investment Value (₹):Q', title='Investment Value (₹)', axis=alt.Axis(format='₹')),
+        tooltip=['Year', 'Investment Value (₹)']
+    ).interactive()
+
+    st.altair_chart(chart, use_container_width=True)
 
 # Information section
 st.header("How Compounding Works")

@@ -1,0 +1,2 @@
+google-generativeai
+streamlit-markmap==1.0.1
